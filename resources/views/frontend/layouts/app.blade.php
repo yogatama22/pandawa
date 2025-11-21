@@ -43,8 +43,6 @@
 
     @yield('content')
 
-    @include('frontend.partials.footer')
-
 
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('js/jquery-migrate-3.5.0.min.js') }}"></script>

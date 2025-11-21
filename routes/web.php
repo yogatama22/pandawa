@@ -18,6 +18,9 @@ Route::get('/', [FrontendController::class, 'index'])->name('home');
 Route::get('/about', [FrontendController::class, 'about'])->name('about');
 Route::get('/services', [FrontendController::class, 'services'])->name('services');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
+Route::get('/projects', [FrontendController::class, 'projects'])->name('projects');
+Route::get('/projects_1', [FrontendController::class, 'projects_1'])->name('projects_1');
+
 Route::post('/contact', [FrontendController::class, 'contactSubmit'])->name('contact.submit');
 
 // Auth Routes

@@ -78,6 +78,25 @@ class FrontendController extends Controller
         return view('frontend.contact', compact('company', 'menus', 'contact'));
     }
 
+
+    public function projects()
+    {
+        $company = CompanyProfile::first();
+        $menus = Menu::active()->with('children')->get();
+        $contact = ContactInfo::first();
+
+        return view('frontend.projects', compact('company', 'menus', 'contact'));
+    }
+
+    public function projects_1()
+    {
+        $company = CompanyProfile::first();
+        $menus = Menu::active()->with('children')->get();
+        $contact = ContactInfo::first();
+
+        return view('frontend.projects_1', compact('company', 'menus', 'contact'));
+    }
+
     /**
      * Handle contact form submission
      */

@@ -639,8 +639,8 @@ blockquote cite:before {
     text-align: center;
 }
 .logo-img {
-    width: 75px;
-    margin-bottom: 5px;
+    width: 175px;
+    /* margin-bottom: 5px; */
 }
 
 .dropdown .nav-link i {
