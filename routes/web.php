@@ -20,11 +20,12 @@ Route::get('/services', [FrontendController::class, 'services'])->name('services
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
 Route::get('/projects', [FrontendController::class, 'projects'])->name('projects');
 Route::get('/projects_1', [FrontendController::class, 'projects_1'])->name('projects_1');
-
 Route::post('/contact', [FrontendController::class, 'contactSubmit'])->name('contact.submit');
 
-// Auth Routes
-Auth::routes();
+// Auth Routes (Login Only)
+Route::get('login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 // Redirect /home ke admin dashboard
 Route::get('/home', function() {
@@ -35,6 +36,11 @@ Route::get('/home', function() {
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    // Company Profile
+    Route::get('company-profile', [CompanyProfileController::class, 'index'])->name('company-profile.index');
+    Route::get('company-profile/edit', [CompanyProfileController::class, 'edit'])->name('company-profile.edit');
+    Route::put('company-profile/update', [CompanyProfileController::class, 'update'])->name('company-profile.update');
     
     // Sliders
     Route::resource('sliders', SliderController::class);
@@ -63,11 +69,6 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // Team Members
     Route::resource('team-members', TeamMemberController::class);
     Route::post('team-members/{teamMember}/toggle', [TeamMemberController::class, 'toggle'])->name('team-members.toggle');
-    
-    // Company Profile
-    Route::get('company-profile', [CompanyProfileController::class, 'index'])->name('company-profile.index');
-    Route::get('company-profile/edit', [CompanyProfileController::class, 'edit'])->name('company-profile.edit');
-    Route::put('company-profile/update', [CompanyProfileController::class, 'update'])->name('company-profile.update');
     
     // Contact Info
     Route::get('contact-info', [ContactInfoController::class, 'index'])->name('contact-info.index');

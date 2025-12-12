@@ -1,65 +1,64 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\CompanyProfile;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyProfileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //
+        $company = CompanyProfile::first();
+        return view('admin.company-profile.index', compact('company'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function edit()
     {
-        //
+        $company = CompanyProfile::firstOrCreate([]);
+        return view('admin.company-profile.edit', compact('company'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function update(Request $request)
     {
-        //
-    }
+        $validated = $request->validate([
+            'company_name' => 'required|string|max:255',
+            'tagline' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'favicon' => 'nullable|image|mimes:png,ico|max:1024',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $company = CompanyProfile::firstOrCreate([]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        // Handle logo upload
+        if ($request->hasFile('logo')) {
+            if ($company->logo) {
+                Storage::disk('public')->delete($company->logo);
+            }
+            $validated['logo'] = $request->file('logo')->store('company', 'public');
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        // Handle favicon upload
+        if ($request->hasFile('favicon')) {
+            if ($company->favicon) {
+                Storage::disk('public')->delete($company->favicon);
+            }
+            $validated['favicon'] = $request->file('favicon')->store('company', 'public');
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $company->update($validated);
+
+        return redirect()->route('admin.company-profile.index')
+            ->with('success', 'Company Profile berhasil diupdate!');
     }
 }
