@@ -348,6 +348,14 @@
             </div>
 
             <div class="menu-item">
+                <a href="{{ route('admin.projects.index') }}"
+                    class="menu-link {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}">
+                    <i class="bi bi-folder"></i>
+                    <span>Projects</span>
+                </a>
+            </div>
+
+            <div class="menu-item">
                 <a href="{{ route('admin.team-members.index') }}"
                     class="menu-link {{ request()->routeIs('admin.team-members.*') ? 'active' : '' }}">
                     <i class="bi bi-people"></i>

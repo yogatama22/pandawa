@@ -10,6 +10,7 @@ use App\Models\Testimonial;
 use App\Models\TeamMember;
 use App\Models\CompanyProfile;
 use App\Models\ContactInfo;
+use App\Models\Project;
 
 class FrontendController extends Controller
 {
@@ -19,13 +20,14 @@ class FrontendController extends Controller
     public function index()
     {
         $company = CompanyProfile::first();
-        $sliders = Slider::active()->get();
+        $sliders = Slider::active()->orderBy('order')->get();
         $menus = Menu::active()->with('children')->get();
         $services = Service::active()->take(6)->get();
         $about = About::first();
         $testimonials = Testimonial::active()->take(3)->get();
         $team = TeamMember::active()->take(4)->get();
         $contact = ContactInfo::first();
+        $featuredProjects = Project::featured()->take(4)->get();
 
         return view('frontend.index', compact(
             'company',
@@ -35,7 +37,8 @@ class FrontendController extends Controller
             'about',
             'testimonials',
             'team',
-            'contact'
+            'contact',
+            'featuredProjects'
         ));
     }
 
@@ -78,23 +81,53 @@ class FrontendController extends Controller
         return view('frontend.contact', compact('company', 'menus', 'contact'));
     }
 
-
-    public function projects()
+    /**
+     * Tampilkan halaman projects list
+     */
+    public function projects(Request $request)
     {
         $company = CompanyProfile::first();
         $menus = Menu::active()->with('children')->get();
         $contact = ContactInfo::first();
 
-        return view('frontend.projects', compact('company', 'menus', 'contact'));
+        $query = Project::active();
+
+        // Filter by category if provided
+        if ($request->has('category') && $request->category != '') {
+            $query->where('category', $request->category);
+        }
+
+        $projects = $query->get();
+        $categories = Project::active()->distinct()->pluck('category');
+
+        return view('frontend.projects', compact('company', 'menus', 'contact', 'projects', 'categories'));
     }
 
-    public function projects_1()
+    /**
+     * Tampilkan detail project
+     */
+    public function projectDetail(Project $project)
     {
+        // Check if project is active
+        if (!$project->is_active) {
+            abort(404);
+        }
+
         $company = CompanyProfile::first();
         $menus = Menu::active()->with('children')->get();
         $contact = ContactInfo::first();
 
-        return view('frontend.projects_1', compact('company', 'menus', 'contact'));
+        // Load project images
+        $project->load('images');
+
+        // Get related projects (same category, exclude current)
+        $relatedProjects = Project::active()
+            ->where('category', $project->category)
+            ->where('id', '!=', $project->id)
+            ->take(3)
+            ->get();
+
+        return view('frontend.project-detail', compact('company', 'menus', 'contact', 'project', 'relatedProjects'));
     }
 
     /**
