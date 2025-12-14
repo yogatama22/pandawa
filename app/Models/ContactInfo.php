@@ -18,6 +18,8 @@ class ContactInfo extends Model
         'facebook_url',
         'instagram_url',
         'twitter_url',
-        'linkedin_url'
+        'linkedin_url',
+        'tiktok_url',
+        'youtube_url'
     ];
 }

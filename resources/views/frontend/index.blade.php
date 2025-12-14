@@ -203,47 +203,6 @@
             </div>
         </section>
 
-        <!-- Blog/News (Optional - bisa dihapus jika tidak ada data) -->
-        <section class="bauen-blog section-padding">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2 class="section-title">Current <span>News</span></h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="owl-carousel owl-theme">
-                            <div class="item">
-                                <div class="position-re o-hidden"> <img src="{{ asset('img/slider/1.jpg') }}" alt=""> </div>
-                                <div class="con"> <span class="category">
-                                        <a href="#">Architecture </a> - {{ now()->format('d.m.Y') }}
-                                    </span>
-                                    <h5><a href="#">Modern Architectural Structures</a></h5>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="position-re o-hidden"> <img src="{{ asset('img/slider/2.jpg') }}" alt=""> </div>
-                                <div class="con"> <span class="category">
-                                        <a href="#">Interior</a> - {{ now()->format('d.m.Y') }}
-                                    </span>
-                                    <h5><a href="#">Modernism in Architecture</a></h5>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="position-re o-hidden"> <img src="{{ asset('img/slider/3.jpg') }}" alt=""> </div>
-                                <div class="con"> <span class="category">
-                                        <a href="#">Urban</a> - {{ now()->format('d.m.Y') }}
-                                    </span>
-                                    <h5><a href="#">Postmodern Architecture</a></h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        @include('frontend.partials.footer')
+        @include('frontend.partials.footer_client')
     </div>
 @endsection

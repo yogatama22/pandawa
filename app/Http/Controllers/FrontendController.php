@@ -11,6 +11,7 @@ use App\Models\TeamMember;
 use App\Models\CompanyProfile;
 use App\Models\ContactInfo;
 use App\Models\Project;
+use App\Models\ContactMessage;
 
 class FrontendController extends Controller
 {
@@ -137,14 +138,24 @@ class FrontendController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:20',
             'subject' => 'required|string|max:255',
             'message' => 'required|string',
+        ], [
+            'name.required' => 'Nama wajib diisi.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'subject.required' => 'Subject wajib diisi.',
+            'message.required' => 'Pesan wajib diisi.',
         ]);
 
-        // Simpan ke database atau kirim email
-        // TODO: Implement contact form handler
+        // Save to database
+        ContactMessage::create($validated);
 
-        return back()->with('success', 'Pesan Anda telah terkirim!');
+        // TODO: Send email notification to admin
+        // You can implement email notification here
+
+        return back()->with('success', 'Pesan Anda telah terkirim! Kami akan segera menghubungi Anda.');
     }
 }

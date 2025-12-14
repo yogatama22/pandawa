@@ -27,10 +27,6 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <h2 class="section-title2">{{ $project->title }}</h2>
-                                <!-- <span class="badge bg-primary">{{ $project->category }}</span>
-                                @if($project->project_type)
-                                    <span class="badge bg-secondary ms-2">{{ $project->project_type }}</span>
-                                @endif -->
                             </div>
                             <a href="{{ route('projects') }}">
                                 <i class="ti-arrow-left"></i> Back to Projects

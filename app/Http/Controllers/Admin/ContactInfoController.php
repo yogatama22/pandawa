@@ -36,6 +36,8 @@ class ContactInfoController extends Controller
             'instagram_url' => 'nullable|url',
             'twitter_url' => 'nullable|url',
             'linkedin_url' => 'nullable|url',
+            'tiktok_url' => 'nullable|url',
+            'youtube_url' => 'nullable|url',
         ]);
 
         $contact = ContactInfo::firstOrCreate([]);
