@@ -16,31 +16,32 @@ use App\Models\ContactMessage;
 class FrontendController extends Controller
 {
     /**
+     * Get shared data for all pages
+     */
+    protected function getSharedData()
+    {
+        return [
+            'company' => CompanyProfile::first(),
+            'menus' => Menu::active()->with('children')->get(),
+            'contact' => ContactInfo::first(),
+        ];
+    }
+
+    /**
      * Tampilkan halaman home
      */
     public function index()
     {
-        $company = CompanyProfile::first();
-        $sliders = Slider::active()->orderBy('order')->get();
-        $menus = Menu::active()->with('children')->get();
-        $services = Service::active()->take(6)->get();
-        $about = About::first();
-        $testimonials = Testimonial::active()->take(3)->get();
-        $team = TeamMember::active()->take(4)->get();
-        $contact = ContactInfo::first();
-        $featuredProjects = Project::featured()->take(6)->get();
+        $data = $this->getSharedData();
 
-        return view('frontend.index', compact(
-            'company',
-            'sliders',
-            'menus',
-            'services',
-            'about',
-            'testimonials',
-            'team',
-            'contact',
-            'featuredProjects'
-        ));
+        $data['sliders'] = Slider::active()->orderBy('order')->get();
+        $data['services'] = Service::active()->orderBy('order')->take(6)->get();
+        $data['about'] = About::first();
+        $data['testimonials'] = Testimonial::active()->latest()->take(3)->get();
+        $data['team'] = TeamMember::active()->orderBy('order')->take(4)->get();
+        $data['featuredProjects'] = Project::featured()->orderBy('order')->take(6)->get();
+
+        return view('frontend.index', $data);
     }
 
     /**
@@ -48,13 +49,12 @@ class FrontendController extends Controller
      */
     public function about()
     {
-        $company = CompanyProfile::first();
-        $menus = Menu::active()->with('children')->get();
-        $about = About::first();
-        $team = TeamMember::active()->get();
-        $contact = ContactInfo::first();
+        $data = $this->getSharedData();
 
-        return view('frontend.about', compact('company', 'menus', 'about', 'team', 'contact'));
+        $data['about'] = About::first();
+        $data['team'] = TeamMember::active()->orderBy('order')->get();
+
+        return view('frontend.about', $data);
     }
 
     /**
@@ -62,12 +62,11 @@ class FrontendController extends Controller
      */
     public function services()
     {
-        $company = CompanyProfile::first();
-        $menus = Menu::active()->with('children')->get();
-        $services = Service::active()->get();
-        $contact = ContactInfo::first();
+        $data = $this->getSharedData();
 
-        return view('frontend.services', compact('company', 'menus', 'services', 'contact'));
+        $data['services'] = Service::active()->orderBy('order')->get();
+
+        return view('frontend.services', $data);
     }
 
     /**
@@ -75,11 +74,9 @@ class FrontendController extends Controller
      */
     public function contact()
     {
-        $company = CompanyProfile::first();
-        $menus = Menu::active()->with('children')->get();
-        $contact = ContactInfo::first();
+        $data = $this->getSharedData();
 
-        return view('frontend.contact', compact('company', 'menus', 'contact'));
+        return view('frontend.contact', $data);
     }
 
     /**
@@ -87,9 +84,7 @@ class FrontendController extends Controller
      */
     public function projects(Request $request)
     {
-        $company = CompanyProfile::first();
-        $menus = Menu::active()->with('children')->get();
-        $contact = ContactInfo::first();
+        $data = $this->getSharedData();
 
         $query = Project::active();
 
@@ -98,10 +93,10 @@ class FrontendController extends Controller
             $query->where('category', $request->category);
         }
 
-        $projects = $query->orderBy('order')->get();
-        $categories = Project::active()->distinct()->pluck('category');
+        $data['projects'] = $query->orderBy('order')->orderBy('created_at', 'desc')->get();
+        $data['categories'] = Project::active()->distinct()->pluck('category');
 
-        return view('frontend.projects', compact('company', 'menus', 'contact', 'projects', 'categories'));
+        return view('frontend.projects', $data);
     }
 
     /**
@@ -114,21 +109,22 @@ class FrontendController extends Controller
             abort(404);
         }
 
-        $company = CompanyProfile::first();
-        $menus = Menu::active()->with('children')->get();
-        $contact = ContactInfo::first();
+        $data = $this->getSharedData();
 
         // Load project images
         $project->load('images');
 
+        $data['project'] = $project;
+
         // Get related projects (same category, exclude current)
-        $relatedProjects = Project::active()
+        $data['relatedProjects'] = Project::active()
             ->where('category', $project->category)
             ->where('id', '!=', $project->id)
+            ->orderBy('order')
             ->take(3)
             ->get();
 
-        return view('frontend.project-detail', compact('company', 'menus', 'contact', 'project', 'relatedProjects'));
+        return view('frontend.project-detail', $data);
     }
 
     /**

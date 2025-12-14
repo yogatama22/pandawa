@@ -13,7 +13,7 @@
     </a>
 </div>
 
-<form action="{{ route('admin.contact-info.update') }}" method="POST">
+<form action="{{ route('admin.contact-info.update', $contact->id) }}" method="POST">
     @csrf
     @method('PUT')
     

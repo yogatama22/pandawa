@@ -308,10 +308,10 @@
             </div>
 
             <div class="menu-item">
-                <a href="{{ route('admin.company-profile.index') }}"
-                    class="menu-link {{ request()->routeIs('admin.company-profile.*') ? 'active' : '' }}">
-                    <i class="bi bi-building"></i>
-                    <span>Company Profile</span>
+                <a href="{{ route('admin.company-settings.index') }}"
+                    class="menu-link {{ request()->routeIs('admin.company-settings.*') ? 'active' : '' }}">
+                    <i class="bi bi-gear-fill"></i>
+                    <span>Company Settings</span>
                 </a>
             </div>
 
@@ -328,14 +328,6 @@
                     class="menu-link {{ request()->routeIs('admin.menus.*') ? 'active' : '' }}">
                     <i class="bi bi-list-ul"></i>
                     <span>Menus</span>
-                </a>
-            </div>
-
-            <div class="menu-item">
-                <a href="{{ route('admin.about.index') }}"
-                    class="menu-link {{ request()->routeIs('admin.about.*') ? 'active' : '' }}">
-                    <i class="bi bi-info-circle"></i>
-                    <span>About</span>
                 </a>
             </div>
 
@@ -376,6 +368,14 @@
                     class="menu-link {{ request()->routeIs('admin.contact-info.*') ? 'active' : '' }}">
                     <i class="bi bi-envelope"></i>
                     <span>Contact Info</span>
+                </a>
+            </div>
+
+            <div class="menu-item">
+                <a href="{{ route('admin.contact-messages.index') }}"
+                    class="menu-link {{ request()->routeIs('admin.contact-messages.*') ? 'active' : '' }}">
+                    <i class="bi bi-inbox"></i>
+                    <span>Contact Messages</span>
                 </a>
             </div>
 

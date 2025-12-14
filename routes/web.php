@@ -7,10 +7,9 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\MasterImageController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ServiceController;
-use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\TeamMemberController;
-use App\Http\Controllers\Admin\CompanyProfileController;
+use App\Http\Controllers\Admin\CompanySettingsController;
 use App\Http\Controllers\Admin\ContactInfoController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\ProjectController;
@@ -39,10 +38,11 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Company Profile
-    Route::get('company-profile', [CompanyProfileController::class, 'index'])->name('company-profile.index');
-    Route::get('company-profile/edit', [CompanyProfileController::class, 'edit'])->name('company-profile.edit');
-    Route::put('company-profile/update', [CompanyProfileController::class, 'update'])->name('company-profile.update');
+    Route::get('company-settings', [CompanySettingsController::class, 'index'])->name('company-settings.index');
+    Route::get('company-settings/edit', [CompanySettingsController::class, 'edit'])->name('company-settings.edit');
+    Route::put('company-settings/profile', [CompanySettingsController::class, 'updateProfile'])->name('company-settings.update-profile');
+    Route::put('company-settings/about', [CompanySettingsController::class, 'updateAbout'])->name('company-settings.update-about');
+
 
     // Sliders
     Route::resource('sliders', SliderController::class);
@@ -58,11 +58,6 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // Services
     Route::resource('services', ServiceController::class);
     Route::post('services/{service}/toggle', [ServiceController::class, 'toggle'])->name('services.toggle');
-
-    // About
-    Route::get('about', [AboutController::class, 'index'])->name('about.index');
-    Route::get('about/edit', [AboutController::class, 'edit'])->name('about.edit');
-    Route::put('about/update', [AboutController::class, 'update'])->name('about.update');
 
     // Projects
     Route::resource('projects', ProjectController::class);

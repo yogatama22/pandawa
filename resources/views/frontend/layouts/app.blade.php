@@ -6,13 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', $company->company_name ?? config('app.name'))</title>
-    <meta name="description" content="@yield('description', $company->meta_description ?? '')">
+    {{-- Dynamic SEO Meta Tags from Company Settings --}}
+    <title>{{ $company->meta_title ?? $company->company_name ?? config('app.name') }}</title>
+    <meta name="description" content="{{ $company->meta_description ?? $company->description ?? '' }}">
     <meta name="keywords" content="{{ $company->meta_keywords ?? '' }}">
+    <meta name="author" content="{{ $company->company_name ?? '' }}">
 
-    <!-- Favicon -->
-    @if(isset($company) && $company->favicon)
-        <link rel="icon" href="{{ Storage::url($company->favicon) }}">
+    {{-- Open Graph Meta Tags --}}
+    <meta property="og:title" content="{{ $company->meta_title ?? $company->company_name ?? '' }}">
+    <meta property="og:description" content="{{ $company->meta_description ?? '' }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    @if($company && $company->logo)
+        <meta property="og:image" content="{{ asset('storage/' . $company->logo) }}">
+    @endif
+
+    {{-- Favicon from Company Settings --}}
+    @if($company && $company->favicon)
+        <link rel="icon" type="image/png" href="{{ asset('storage/' . $company->favicon) }}">
+        <link rel="shortcut icon" type="image/png" href="{{ asset('storage/' . $company->favicon) }}">
+    @else
+        <link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}">
     @endif
 
 
