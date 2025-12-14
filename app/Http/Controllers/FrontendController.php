@@ -27,7 +27,7 @@ class FrontendController extends Controller
         $testimonials = Testimonial::active()->take(3)->get();
         $team = TeamMember::active()->take(4)->get();
         $contact = ContactInfo::first();
-        $featuredProjects = Project::featured()->take(4)->get();
+        $featuredProjects = Project::featured()->take(6)->get();
 
         return view('frontend.index', compact(
             'company',
@@ -97,7 +97,7 @@ class FrontendController extends Controller
             $query->where('category', $request->category);
         }
 
-        $projects = $query->get();
+        $projects = $query->orderBy('order')->get();
         $categories = Project::active()->distinct()->pluck('category');
 
         return view('frontend.projects', compact('company', 'menus', 'contact', 'projects', 'categories'));

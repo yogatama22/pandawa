@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Admin\CompanyProfileController;
 use App\Http\Controllers\Admin\ContactInfoController;
+use App\Http\Controllers\Admin\ProjectController;
 
 // Frontend Routes
 Route::get('/', [FrontendController::class, 'index'])->name('home');
@@ -19,7 +20,7 @@ Route::get('/about', [FrontendController::class, 'about'])->name('about');
 Route::get('/services', [FrontendController::class, 'services'])->name('services');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
 Route::get('/projects', [FrontendController::class, 'projects'])->name('projects');
-Route::get('/projects_1', [FrontendController::class, 'projects_1'])->name('projects_1');
+Route::get('/projects/{project:slug}', [FrontendController::class, 'projectDetail'])->name('projects.detail');
 Route::post('/contact', [FrontendController::class, 'contactSubmit'])->name('contact.submit');
 
 // Auth Routes (Login Only)
@@ -61,6 +62,12 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('about', [AboutController::class, 'index'])->name('about.index');
     Route::get('about/edit', [AboutController::class, 'edit'])->name('about.edit');
     Route::put('about/update', [AboutController::class, 'update'])->name('about.update');
+    
+    // Projects
+    Route::resource('projects', ProjectController::class);
+    Route::post('projects/{project}/toggle', [ProjectController::class, 'toggle'])->name('projects.toggle');
+    Route::post('projects/{project}/toggle-featured', [ProjectController::class, 'toggleFeatured'])->name('projects.toggle-featured');
+    Route::delete('projects/images/{image}', [ProjectController::class, 'deleteImage'])->name('projects.delete-image');
     
     // Testimonials
     Route::resource('testimonials', TestimonialController::class);

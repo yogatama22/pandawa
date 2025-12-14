@@ -51,10 +51,18 @@
         <!-- Left Panel -->
         <div class="left-panel">
             <ul class="social-left clearfix">
-                <li><a href="#"><i class="fa-brands fa-tiktok"></i></a></li>
-                <li><a href="#"><i class="ti-instagram"></i></a></li>
-                <li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>
-                <li><a href="#"><i class="ti-facebook"></i></a></li>
+                @if($contact && $contact->facebook_url)
+                    <li><a href="{{ $contact->facebook_url }}" target="_blank"><i class="ti-facebook"></i></a></li>
+                @endif
+                @if($contact && $contact->instagram_url)
+                    <li><a href="{{ $contact->instagram_url }}" target="_blank"><i class="ti-instagram"></i></a></li>
+                @endif
+                @if($contact && $contact->twitter_url)
+                    <li><a href="{{ $contact->twitter_url }}" target="_blank"><i class="fa-brands fa-x-twitter"></i></a></li>
+                @endif
+                @if($contact && $contact->linkedin_url)
+                    <li><a href="{{ $contact->linkedin_url }}" target="_blank"><i class="ti-linkedin"></i></a></li>
+                @endif
             </ul>
         </div>
     </header>
@@ -73,7 +81,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 col-md-12 mb-30 animate-box" data-animate-effect="fadeInUp">
-                        <h2 class="section-title">About <span>{{ $company->company_name ?? 'Bauen' }}</span></h2>
+                        <h2 class="section-title">About <span>{{ $company->company_name ?? 'Pandawa Renjana' }}</span></h2>
                         @if($about)
                             <p>{{ $about->description }}</p>
                             @if($about->mission)
@@ -83,18 +91,19 @@
                                 <p><strong>Vision:</strong> {{ $about->vision }}</p>
                             @endif
                         @else
-                            <p>Architecture viverra tristique justo duis vitae diam neque nivamus aestan ateuene artines
-                                aringianu atelit finibus viverra nec lacus. Nedana theme erodino setlie suscipe no curabit
-                                tristique.</p>
-                            <p>Design inilla duiman at elit finibus viverra nec a lacus themo the drudea seneoice misuscipit non
-                                sagie the fermen.</p>
+                            <p>Kami adalah perusahaan yang bergerak di bidang arsitektur, desain interior, dan konstruksi, yang
+                                berkomitmen menghadirkan karya berkualitas tinggi melalui perpaduan antara inovasi, estetika,
+                                dan fungsionalitas.</p>
+                            <p>Kami menyediakan layanan terpadu (one stop service) mulai dari tahap perancangan konsep,
+                                pengelolaan proyek, hingga penyelesaian akhir, agar setiap klien memperoleh hasil sesuai
+                                kebutuhan dan impian mereka.</p>
                         @endif
                     </div>
                     <div class="col-lg-6 col-md-12 animate-box" data-animate-effect="fadeInUp">
                         <div class="about-img">
                             <div class="img">
                                 <img src="{{ $about && $about->image ? Storage::url($about->image) : asset('img/about.jpg') }}"
-                                    class="img-fluid" alt="">
+                                    class="img-fluid" alt="{{ $company->company_name ?? 'About' }}">
                             </div>
                             <div class="about-img-2 about-buro">{{ $company->company_name ?? 'Our' }} Office</div>
                         </div>
@@ -138,7 +147,8 @@
                                     <div class="con">
                                         <h6><a href="#">Interior</a></h6>
                                         <h5><a href="#">Sample Project</a></h5>
-                                        <div class="line"></div> <a href="#"><i class="ti-arrow-right"></i></a>
+                                        <div class="line"></div>
+                                        <a href="#"><i class="ti-arrow-right"></i></a>
                                     </div>
                                 </div>
                             @endforelse
@@ -160,7 +170,7 @@
                     @forelse($services as $index => $service)
                         <div class="col-md-4">
                             <div class="item">
-                                <a href="#">
+                                <a href="{{ route('services') }}">
                                     @if($service->image)
                                         <img src="{{ Storage::url($service->image) }}" alt="{{ $service->title }}">
                                     @elseif($service->icon)
@@ -172,7 +182,7 @@
                                     <h5>{{ $service->title }}</h5>
                                     <div class="line"></div>
                                     <p>{{ Str::limit($service->description, 120) }}</p>
-                                    <div class="numb">{{ str_pad($service->order, 2, '0', STR_PAD_LEFT) }}</div>
+                                    <div class="numb">{{ str_pad($service->order + 1, 2, '0', STR_PAD_LEFT) }}</div>
                                 </a>
                             </div>
                         </div>
@@ -193,7 +203,7 @@
             </div>
         </section>
 
-        <!-- Blog -->
+        <!-- Blog/News (Optional - bisa dihapus jika tidak ada data) -->
         <section class="bauen-blog section-padding">
             <div class="container">
                 <div class="row">
@@ -207,33 +217,25 @@
                             <div class="item">
                                 <div class="position-re o-hidden"> <img src="{{ asset('img/slider/1.jpg') }}" alt=""> </div>
                                 <div class="con"> <span class="category">
-                                        <a href="blog.html">Architecture </a> - 20.12.2025
+                                        <a href="#">Architecture </a> - {{ now()->format('d.m.Y') }}
                                     </span>
-                                    <h5><a href="post.html">Modern Architectural Structures</a></h5>
+                                    <h5><a href="#">Modern Architectural Structures</a></h5>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="position-re o-hidden"> <img src="{{ asset('img/slider/2.jpg') }}" alt=""> </div>
                                 <div class="con"> <span class="category">
-                                        <a href="blog.html">Interior</a> - 18.12.2025
+                                        <a href="#">Interior</a> - {{ now()->format('d.m.Y') }}
                                     </span>
-                                    <h5><a href="post.html">Modernism in Architecture</a></h5>
+                                    <h5><a href="#">Modernism in Architecture</a></h5>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="position-re o-hidden"> <img src="{{ asset('img/slider/3.jpg') }}" alt=""> </div>
                                 <div class="con"> <span class="category">
-                                        <a href="blog.html">Urban</a> - 16.12.2025
+                                        <a href="#">Urban</a> - {{ now()->format('d.m.Y') }}
                                     </span>
-                                    <h5><a href="post.html">Postmodern Architecture</a></h5>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="position-re o-hidden"> <img src="{{ asset('img/slider/4.jpg') }}" alt=""> </div>
-                                <div class="con"> <span class="category">
-                                        <a href="blog.html">Planing</a> - 14.12.2025
-                                    </span>
-                                    <h5><a href="post.html">Modern Architecture Buildings</a></h5>
+                                    <h5><a href="#">Postmodern Architecture</a></h5>
                                 </div>
                             </div>
                         </div>

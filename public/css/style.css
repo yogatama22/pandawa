@@ -483,6 +483,17 @@ blockquote cite:before {
     text-transform: uppercase;
 }
 
+.section-title3 {
+    font-size: 28px;
+    font-weight: 300;
+    color: #b19777;
+    position: relative;
+    line-height: 1.25em;
+    margin-bottom: 30px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
 
 /* ======= Navbar style ======= */
 .navbar {

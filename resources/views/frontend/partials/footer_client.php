@@ -1,5 +1,5 @@
     <!-- Promo video - Testiominals -->
-    <!-- <section class="testimonials">
+    <section class="testimonials">
         <div class="background bg-img bg-fixed section-padding pb-0" data-background="img/slider/1.jpg"
             data-overlay-dark="3">
             <div class="container">
@@ -68,9 +68,9 @@
                 </div>
             </div>
         </div>
-    </section> -->
+    </section>
     <!-- Clients -->
-    <!-- <section class="clients">
+    <section class="clients">
         <div class="container">
             <div class="row">
                 <div class="col-md-7">
@@ -97,7 +97,7 @@
                 </div>
             </div>
         </div>
-    </section> -->
+    </section>
     <!-- Footer -->
     <footer class="main-footer dark">
         <div class="container">
