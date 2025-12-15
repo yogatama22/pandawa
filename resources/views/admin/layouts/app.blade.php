@@ -324,14 +324,6 @@
             </div>
 
             <div class="menu-item">
-                <a href="{{ route('admin.menus.index') }}"
-                    class="menu-link {{ request()->routeIs('admin.menus.*') ? 'active' : '' }}">
-                    <i class="bi bi-list-ul"></i>
-                    <span>Menus</span>
-                </a>
-            </div>
-
-            <div class="menu-item">
                 <a href="{{ route('admin.services.index') }}"
                     class="menu-link {{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
                     <i class="bi bi-briefcase"></i>
@@ -380,10 +372,10 @@
             </div>
 
             <div class="menu-item">
-                <a href="{{ route('admin.master-images.index') }}"
-                    class="menu-link {{ request()->routeIs('admin.master-images.*') ? 'active' : '' }}">
-                    <i class="bi bi-card-image"></i>
-                    <span>Master Images</span>
+                <a href="{{ route('admin.clients.index') }}"
+                    class="menu-link {{ request()->routeIs('admin.clients.*') ? 'active' : '' }}">
+                    <i class="bi bi-briefcase"></i>
+                    <span>Clients</span>
                 </a>
             </div>
 

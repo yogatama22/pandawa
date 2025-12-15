@@ -8,6 +8,7 @@ use App\Models\Menu;
 use App\Models\Service;
 use App\Models\Testimonial;
 use App\Models\TeamMember;
+use App\Models\Client;
 
 class DashboardController extends Controller
 {
@@ -24,6 +25,7 @@ class DashboardController extends Controller
             'services' => Service::count(),
             'testimonials' => Testimonial::count(),
             'team_members' => TeamMember::count(),
+            'clients' => Client::count(),
         ];
 
         return view('admin.dashboard', compact('stats'));

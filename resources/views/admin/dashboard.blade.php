@@ -100,6 +100,27 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card border-start-danger" style="border-left-color: #dc3545 !important;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-2 text-uppercase" style="font-size: 0.875rem;">Clients</h6>
+                            <h2 class="mb-0 fw-bold">{{ $stats['clients'] }}</h2>
+                        </div>
+                        <div class="text-danger" style="font-size: 2.5rem;">
+                            <i class="bi bi-briefcase"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <a href="{{ route('admin.clients.index') }}" class="btn btn-sm btn-outline-danger">
+                            Lihat Detail <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Quick Actions -->

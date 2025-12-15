@@ -12,6 +12,7 @@ use App\Models\CompanyProfile;
 use App\Models\ContactInfo;
 use App\Models\Project;
 use App\Models\ContactMessage;
+use App\Models\Client;
 
 class FrontendController extends Controller
 {
@@ -24,6 +25,8 @@ class FrontendController extends Controller
             'company' => CompanyProfile::first(),
             'menus' => Menu::active()->with('children')->get(),
             'contact' => ContactInfo::first(),
+            'clients' => Client::active()->orderBy('order')->get(),
+            'testimonials' => Testimonial::active()->latest()->take(3)->get()
         ];
     }
 
@@ -37,7 +40,6 @@ class FrontendController extends Controller
         $data['sliders'] = Slider::active()->orderBy('order')->get();
         $data['services'] = Service::active()->orderBy('order')->take(6)->get();
         $data['about'] = About::first();
-        $data['testimonials'] = Testimonial::active()->latest()->take(3)->get();
         $data['team'] = TeamMember::active()->orderBy('order')->take(4)->get();
         $data['featuredProjects'] = Project::featured()->orderBy('order')->take(6)->get();
 

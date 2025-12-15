@@ -36,6 +36,19 @@
         rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/plugins.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+    <style>
+        .clients-logo {
+            width: 90px;
+            height: 90px;
+            overflow: hidden;
+        }
+
+        .clients-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
     @stack('styles')
 </head>
 

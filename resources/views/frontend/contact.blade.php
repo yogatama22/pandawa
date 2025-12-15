@@ -151,7 +151,7 @@
         </div>
     </section>
     
-    @include('frontend.partials.footer')
+    @include('frontend.partials.footer_client')
 @endsection
 
 @push('styles')

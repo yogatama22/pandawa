@@ -27,44 +27,69 @@
                         <div class="head-box">
                             <h4>What Client's Say ?</h4>
                         </div>
+
                         <div class="owl-carousel owl-theme">
-                            <div class="item"> <span class="quote"><img src="img/quot.png" alt=""></span>
-                                <p>Architect dapibus augue metus the nec feugiat erat hendrerit nec. Duis ve ante the
-                                    lemon sanleo nec feugiat erat hendrerit necuis ve ante.</p>
-                                <div class="info">
-                                    <div class="author-img"> <img src="img/team/1.jpg" alt=""> </div>
-                                    <div class="cont">
-                                        <h6>Jason Brown</h6> <span>Crowne Plaza Owner</span>
+                            <?php if (isset($testimonials) && $testimonials->count() > 0): ?>
+                                <?php foreach ($testimonials as $testimonial): ?>
+                                    <div class="item">
+                                        <span class="quote">
+                                            <img src="img/quot.png" alt="">
+                                        </span>
+
+                                        <p>
+                                            <?php
+                                            // sesuaikan field isi testimonial
+                                            echo $testimonial->testimonial ?? '';
+                                            ?>
+                                        </p>
+
+                                        <div class="info">
+                                            <div class="author-img">
+                                                <?php if (!empty($testimonial->client_photo)): ?>
+                                                    <img src="<?php echo Storage::url($testimonial->client_photo); ?>"
+                                                        alt="<?php echo $testimonial->client_name; ?>">
+                                                <?php else: ?>
+                                                    <img src="img/team/default.jpg" alt="<?php echo $testimonial->client_name; ?>">
+                                                <?php endif; ?>
+                                            </div>
+
+                                            <div class="cont">
+                                                <h6><?php echo $testimonial->client_name; ?></h6>
+                                                <span>
+                                                    <?php
+                                                    // jabatan / perusahaan (opsional)
+                                                    echo $testimonial->client_position ?? $testimonial->client_company ?? '';
+                                                    ?>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <!-- Fallback jika belum ada testimonial -->
+                                <div class="item">
+                                    <span class="quote">
+                                        <img src="img/quot.png" alt="">
+                                    </span>
+                                    <p>
+                                        Belum ada testimonial dari klien. Kami selalu berkomitmen memberikan hasil terbaik
+                                        untuk setiap proyek.
+                                    </p>
+                                    <div class="info">
+                                        <div class="author-img">
+                                            <img src="img/team/default.jpg" alt="Client">
+                                        </div>
+                                        <div class="cont">
+                                            <h6>Our Client</h6>
+                                            <span>Happy Customer</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="item"> <span class="quote">
-                                    <img src="img/quot.png" alt="">
-                                </span>
-                                <p>Interior dapibus augue metus the nec feugiat erat hendrerit nec. Duis ve ante the
-                                    lemon sanleo nec feugiat erat hendrerit necuis ve ante.</p>
-                                <div class="info">
-                                    <div class="author-img"> <img src="img/team/2.jpg" alt=""> </div>
-                                    <div class="cont">
-                                        <h6>Emily White</h6> <span>Armada Owner</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item"> <span class="quote">
-                                    <img src="img/quot.png" alt="">
-                                </span>
-                                <p>Urban dapibus augue metus the nec feugiat erat hendrerit nec. Duis ve ante the lemon
-                                    sanleo nec feugiat erat hendrerit necuis ve ante.</p>
-                                <div class="info">
-                                    <div class="author-img"> <img src="img/team/4.jpg" alt=""> </div>
-                                    <div class="cont">
-                                        <h6>Jesica Smith</h6> <span>Alsa Manager</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -74,30 +99,50 @@
     <div class="container">
         <div class="row">
             <div class="col-md-7">
-                <div class="owl-carousel owl-theme">
-                    <div class="clients-logo">
-                        <a href="#0"><img src="img/clients/1.png" alt=""></a>
+                <?php if (isset($clients) && $clients->count() > 0): ?>
+                    <div class="owl-carousel owl-theme">
+                        <?php foreach ($clients as $client): ?>
+                            <div class="clients-logo">
+                                <?php if (!empty($client->website)): ?>
+                                    <a href="<?php echo $client->website; ?>" target="_blank" title="<?php echo $client->name; ?>">
+                                        <img src="<?php echo Storage::url($client->logo); ?>" alt="<?php echo $client->name; ?>">
+                                    </a>
+                                <?php else: ?>
+                                    <a href="#" title="<?php echo $client->name; ?>">
+                                        <img src="<?php echo Storage::url($client->logo); ?>" alt="<?php echo $client->name; ?>">
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                    <div class="clients-logo">
-                        <a href="#0"><img src="img/clients/2.png" alt=""></a>
+                <?php else: ?>
+                    <!-- Default clients jika belum ada data -->
+                    <div class="owl-carousel owl-theme">
+                        <div class="clients-logo">
+                            <a href="#0"><img src="img/clients/1.png" alt=""></a>
+                        </div>
+                        <div class="clients-logo">
+                            <a href="#0"><img src="img/clients/2.png" alt=""></a>
+                        </div>
+                        <div class="clients-logo">
+                            <a href="#0"><img src="img/clients/3.png" alt=""></a>
+                        </div>
+                        <div class="clients-logo">
+                            <a href="#0"><img src="img/clients/4.png" alt=""></a>
+                        </div>
+                        <div class="clients-logo">
+                            <a href="#0"><img src="img/clients/5.png" alt=""></a>
+                        </div>
+                        <div class="clients-logo">
+                            <a href="#0"><img src="img/clients/6.png" alt=""></a>
+                        </div>
                     </div>
-                    <div class="clients-logo">
-                        <a href="#0"><img src="img/clients/3.png" alt=""></a>
-                    </div>
-                    <div class="clients-logo">
-                        <a href="#0"><img src="img/clients/4.png" alt=""></a>
-                    </div>
-                    <div class="clients-logo">
-                        <a href="#0"><img src="img/clients/5.png" alt=""></a>
-                    </div>
-                    <div class="clients-logo">
-                        <a href="#0"><img src="img/clients/6.png" alt=""></a>
-                    </div>
-                </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
 </section>
+
 <!-- Footer -->
 <footer class="main-footer dark">
     <div class="container">
@@ -139,9 +184,10 @@
                 <div class="col-md-4 abot">
                     <div class="social-icon"> <a href="<?php echo $contact->facebook_url ?? '' ?>"><i
                                 class="ti-facebook"></i></a> <a href="<?php echo $contact->twitter_url ?? '' ?>"><i
-                                class="fa-brands fa-x-twitter"></i></a> <a href="<?php echo $contact->instagram_url ?? '' ?>"><i
-                                class="ti-instagram"></i></a> <a href="<?php echo $contact->tiktok_url ?? '' ?>"><i
-                                class="fa-brands fa-tiktok"></i></a> </div>
+                                class="fa-brands fa-x-twitter"></i></a> <a
+                            href="<?php echo $contact->instagram_url ?? '' ?>"><i class="ti-instagram"></i></a> <a
+                            href="<?php echo $contact->tiktok_url ?? '' ?>"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <!-- <p class="right"><a href="#">Terms &amp; Conditions</a></p> -->
